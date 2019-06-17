@@ -33,8 +33,8 @@ function CS_REST_TRANSPORT_can_use_raw_socket($requires_ssl) {
 class CS_REST_BaseTransport {
     
     var $_log;
-    
-    function CS_REST_BaseTransport($log) {
+
+    function __construct($log) {
         $this->_log = $log;
     }
     
@@ -65,9 +65,8 @@ class CS_REST_CurlTransport extends CS_REST_BaseTransport {
 
     var $_curl_zlib;
 
-    function CS_REST_CurlTransport($log) {
-        $this->CS_REST_BaseTransport($log);
-        
+    function __construct($log) {
+        parent::__construct($log);
         $curl_version = curl_version();
         $this->_curl_zlib = isset($curl_version['libz_version']);
     }
@@ -213,7 +212,7 @@ class CS_REST_SocketTransport extends CS_REST_BaseTransport {
 
     var $_socket_wrapper;
 
-    function CS_REST_SocketTransport($log, $socket_wrapper = NULL) {
+    function __construct($log, $socket_wrapper = NULL) {
         $this->CS_REST_BaseTransport($log);
 
         if(is_null($socket_wrapper)) {

@@ -28,8 +28,8 @@ class CS_REST_Wrapper_Result {
      * @var int
      */
     var $http_status_code;
-    
-    function CS_REST_Wrapper_Result($response, $code) {
+
+    function __construct($response, $code) {
         $this->response = $response;
         $this->http_status_code = $code;
     }
@@ -127,7 +127,7 @@ class CS_REST_Wrapper_Base {
      * @param $transport The transport to use. Used for dependency injection
      * @access public
      */
-    function CS_REST_Wrapper_Base(
+    function __construct(
         $auth_details,
         $protocol = 'https',
         $debug_level = CS_REST_LOG_NONE,

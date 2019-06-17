@@ -37,17 +37,17 @@ class SPARTAN_CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * @param $transport The transport to use. Used for dependency injection
      * @access public
      */
-    function SPARTAN_CS_REST_Subscribers (
-    $list_id,
-    $auth_details,
-    $protocol = 'https',
-    $debug_level = CS_REST_LOG_NONE,
-    $host = 'api.createsend.com',
-    $log = NULL,
-    $serialiser = NULL,
-    $transport = NULL) {
+    function __construct(
+                        $list_id,
+                        $auth_details,
+                        $protocol = 'https',
+                        $debug_level = CS_REST_LOG_NONE,
+                        $host = 'api.createsend.com',
+                        $log = NULL,
+                        $serialiser = NULL,
+                        $transport = NULL) {
 
-        $this->CS_REST_Wrapper_Base($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+        parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_list_id($list_id);
 
     }
