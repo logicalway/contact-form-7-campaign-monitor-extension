@@ -17,5 +17,3 @@ class CS_REST_Log {
         }
     }
 }
-
-?>

@@ -71,10 +71,6 @@ Do you have questions or issues with Contact Form 7 Campaign Monitor Extension? 
 
 For more information, see [Releases](http://renzojohnson.com/contributions/contact-form-7-campaign-monitor-extension).
 
-= 0.4.46x =
-
-* Fixed construct error
-
 = 0.4.45 =
 
 * Fixed php error

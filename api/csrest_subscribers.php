@@ -38,14 +38,14 @@ class SPARTAN_CS_REST_Subscribers extends CS_REST_Wrapper_Base {
      * @access public
      */
     function __construct(
-                        $list_id,
-                        $auth_details,
-                        $protocol = 'https',
-                        $debug_level = CS_REST_LOG_NONE,
-                        $host = 'api.createsend.com',
-                        $log = NULL,
-                        $serialiser = NULL,
-                        $transport = NULL) {
+    $list_id,
+    $auth_details,
+    $protocol = 'https',
+    $debug_level = CS_REST_LOG_NONE,
+    $host = 'api.createsend.com',
+    $log = NULL,
+    $serialiser = NULL,
+    $transport = NULL) {
 
         parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_list_id($list_id);
