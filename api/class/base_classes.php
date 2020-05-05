@@ -28,7 +28,7 @@ class CS_REST_Wrapper_Result {
      * @var int
      */
     var $http_status_code;
-
+    
     function __construct($response, $code) {
         $this->response = $response;
         $this->http_status_code = $code;
