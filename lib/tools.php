@@ -131,7 +131,7 @@ function cme_mail_tags() {
 
 
 if (!function_exists('chimpmatic_tags')) {
-  function chimpmatic_tags( $output, $name, $html="" ) {
+  function chimpmatic_tags( $output, $name, $html="", $mail_tag  ) {
 
     if ( '_domain' == $name ) {
       $output = chimpmatic_domain();
@@ -146,7 +146,7 @@ if (!function_exists('chimpmatic_tags')) {
 
   }
 }
-add_filter( 'wpcf7_special_mail_tags', 'chimpmatic_tags', 10, 3 );
+add_filter( 'wpcf7_special_mail_tags', 'chimpmatic_tags', 10, 4 );
 
 
 if (!function_exists('chimpmatic_add_form_tag_posts')) {
