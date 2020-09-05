@@ -131,7 +131,7 @@ function cme_mail_tags() {
 
 
 if (!function_exists('chimpmatic_tags')) {
-  function chimpmatic_tags( $output, $name, $html="", $mail_tag  ) {
+  function chimpmatic_tags( $output, $name, $html="", $mail_tag="" ) {
 
     if ( '_domain' == $name ) {
       $output = chimpmatic_domain();
