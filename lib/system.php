@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2017 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 <div id="sys-dev">
 
-  <div id="toggle-mce-sys" class="highlight" style="margin-top: 1em; margin-bottom: 1em; display: none;">
+  <div id="toggle-sys-cme" class="highlight" style="margin-top: 1em; margin-bottom: 1em; display: none;">
     <h3>Debugger - System Info</h3>
     <pre><code><?php
 

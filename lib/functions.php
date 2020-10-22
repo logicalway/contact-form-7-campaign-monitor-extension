@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2017 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,10 +16,102 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-resetlogfile_cm();  //para resetear
+//resetlogfile_cm();  //para resetear
+
+add_action( 'wp_ajax_campaing_logreset',  'campaing_logreset' );
+add_action( 'wp_ajax_no_priv_campaing_logreset',  'campaing_logreset' );
+
+add_action( 'wp_ajax_campaing_logload',  'campaing_logload' );
+add_action( 'wp_ajax_no_priv_campaing_logload',  'campaing_logload' );
+
+add_action( 'wp_ajax_wpcf7_cme_set_autoupdate',  'wpcf7_cme_set_autoupdate' );
+add_action( 'wp_ajax_no_wpcf7_cme_set_autoupdate',  'wpcf7_cme_set_autoupdate' );
+
+
+function wpcf7_cme_set_autoupdate() {
+	global $wpdb;
+
+	$valuecheck = isset( $_POST['valcheck'] ) ? $_POST['valcheck'] : 0 ;
+
+	if ( get_option( 'campaignmonitor-update' ) !== false ) {
+        update_option( 'campaignmonitor-update', $valuecheck );
+
+    } else {
+      $deprecated = null;
+      $autoload = 'no';
+      add_option( 'campaignmonitor-update', $valuecheck, $deprecated, $autoload );
+    }
+
+	wp_die();
+}
+
+function cme_html_log_view (){
+?>
+		<div id="sys-dev">
+
+			<div id="cm_eventlog-sys" class="highlight" style="margin-top: 1em; margin-bottom: 1em; display: none;">
+				<h3>Log Viewer</h3><input id="cm_log_reset" type="button" value="Log Reset" class="button button-primary" style="width:15%;">
+
+			<pre><code id="cm_log_panel" ><?php cme_get_log_array ()  ?></code></pre>
+
+	 </div>
+
+</div>
+<?php
+}
+
+function cme_get_log_array () {
+    $default = array() ;
+    $log = get_option ('cme_db_issues_log', $default  ) ;
+
+    $cme_log = '' ;
+
+    foreach ( $log as $item ) {
+
+      $cme_log .= "\n" . 'Date : ' . $item['datetxt'];
+      $cme_log .= "\n" . '==== Start Log ====' . "\n";
+      $cme_log .= $item ['content'] .  "\n";
+      $cme_log .= print_r ( $item ['object'],true );
+      $cme_log .= "\n" . '==== End Log ====' . "\n" ;
+
+    }
+
+    echo $cme_log;
+
+}
+
+
+function campaing_logreset () {
+
+    global $wpdb;
+
+    $cme_db_logdb = new cme_db_log( 'cme_db_issues', 1,'api' );
+    $res = $cme_db_logdb->cme_log_delete_db() ;
+
+    $cme_log = 'Your Log is clean now!';
+    $cme_log .= cme_get_log_array () ;
+
+    echo $cme_log;
+
+    wp_die();
+
+}
+
+function campaing_logload () {
+
+    global $wpdb;
+
+    cme_get_log_array () ;
+
+    wp_die();
+
+}
+
+
 
 function wpcf7_cm_add_campaignmonitor($args) {
 	$cf7_cm_defaults = array();
+	$cme_txcomodin = $args->id();
 	$cf7_cm = get_option( 'cf7_cm_'.$args->id(), $cf7_cm_defaults );
 
 	$host = esc_url_raw( $_SERVER['HTTP_HOST'] );
@@ -98,6 +190,8 @@ add_filter('wpcf7_form_response_output', 'spartan_cme_author_wpcf7', 40, 4);
 function wpcf7_cm_subscribe($obj) {
 
 	$cf7_cm = get_option( 'cf7_cm_'.$obj->id() );
+	$idform = 'cf7_cm_'.$obj->id() ;
+
 	$submission = WPCF7_Submission::get_instance();
 
   $logfileEnabled = isset($cf7_cm['logfileEnabled']) && !is_null($cf7_cm['logfileEnabled']) ? $cf7_cm['logfileEnabled'] : false;
@@ -131,6 +225,8 @@ function wpcf7_cm_subscribe($obj) {
 
 		}
 
+		$CustomFields[] ="";
+
 		for($i=1;$i<=20;$i++) {
 
 			if( isset($cf7_cm['CustomKey'.$i]) && isset($cf7_cm['CustomValue'.$i]) && strlen(trim($cf7_cm['CustomValue'.$i])) != 0 ) {
@@ -154,41 +250,39 @@ function wpcf7_cm_subscribe($obj) {
 
 			try {
 
-        require_once( SPARTAN_CME_PLUGIN_DIR .'/api/csrest_subscribers.php' );
 
-				$wrap = new SPARTAN_CS_REST_Subscribers( trim($listarr[0]), $cf7_cm['api'] );
+					$apiKey = $cf7_cm['api'];
+					$listId = trim($listarr[0]) ;
 
-				foreach($listarr as $listid) {
-
-					if( empty($CustomFields) ){
-
-						$CustomFields = array();
-
-					}
-
-					$wrap->set_list_id( trim( $listid ) );
-
-					$result = $wrap->add( array(
+				 	$subscriber = array(
 						'EmailAddress' => $email,
 						'Name' => $name,
 						'CustomFields' => $CustomFields,
-						'Resubscribe' => $ResubscribeOption
-					) );
+						'Resubscribe' => $ResubscribeOption,
+						'RestartSubscriptionBasedAutoresponders' => true,
+						'ConsentToTrack' => 'Yes' );
 
-				}
+					$url = sprintf('https://api.createsend.com/api/v3.2/subscribers/%s.json', $listId);
 
-        $resultsend = $result->response;
-				$resultfinal = $resultsend;
-        $resultfinal = ( is_null( $resultfinal ) or trim( $resultfinal ) == ''   ) ? 'Email sent Ok' : $resultfinal;
+					$vc_headers = array(
+        										'headers' => array(
+            													'Authorization' => 'Basic ' . base64_encode($apiKey . ':x')
+        																			),
+        										'body' => wp_json_encode($subscriber)
+    												 );
 
-				$cme_debug_logger = new cme_Debug_Logger();
-				$cme_debug_logger->log_cme_debug( 'Email submission - Result: ' . $resultfinal, 1, $logfileEnabled );
+					$resultsend = wp_remote_post($url, $vc_headers );
+
+					$resultfinal = $resultsend;
+
+					$cme_db_log = new cme_db_log( 'cme_db_issues',  $logfileEnabled,'api',$idform );
+					$cme_db_log->cme_log_insert_db(1, 'Subscribe Response: ' , $resultfinal  );
 
 			} catch ( Exception $e ) {
 
       		//echo 'Error, check your error log file for details';
-		 		$cme_debug_logger = new cme_Debug_Logger();
-				$cme_debug_logger->log_cme_debug( 'Email submission - Result: ' . $e->getMessage(), 4, $logfileEnabled );
+		 		$cme_db_log = new cme_db_log( 'cme_db_issues' , $logfileEnabled,'api',$idform );
+				$cme_db_log->cme_log_insert_db(4, 'Contact Form 7 response: Try Catch  ' . $e->getMessage()  , $e  );
 
       }
 
@@ -224,7 +318,7 @@ function cf7_cm_tag_replace( $pattern, $subject, $posted_data, $html = false ) {
 			return stripslashes( $replaced );
 		}
 
-		if ( $special = apply_filters( 'wpcf7_special_mail_tags', '', $matches[1],'','' ) )
+		if ( $special = apply_filters( 'wpcf7_special_mail_tags', '', $matches[1] ) )
 			return $special;
 
 		return $matches[0];

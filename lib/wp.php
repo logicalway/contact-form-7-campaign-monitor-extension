@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2017 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,13 +19,8 @@
 function cme_updts ( $update, $item ) {
     $plugins = array (
         'blocks',
-        'chimpmatic',
-        'quick-maps',
         'contact-form-7-campaign-monitor-extension',
         'contact-form-7-mailchimp-extension',
-        'integrate-contact-form-7-and-aweber',
-        'cf7-getresponse',
-        'cf7-icontact-extension',
     );
     if ( in_array( $item->slug, $plugins ) ) {
         return true;
@@ -33,6 +28,11 @@ function cme_updts ( $update, $item ) {
         return $update;
     }
 }
-add_filter( 'auto_update_plugin', 'cme_updts', 10, 2 );
 
+$cme_autoupdate = get_option( 'campaignmonitor-update', '1' ) ;
+if ( $cme_autoupdate  )
+  add_filter( 'auto_update_plugin', 'cme_updts', 10, 2 );
+  //error_log ( 'Autupdate:  Activado'  ) ;
+
+  //error_log ( 'Autupdate:  Desactivado'  ) ;
 

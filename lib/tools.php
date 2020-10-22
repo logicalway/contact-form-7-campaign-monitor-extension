@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2017 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -45,17 +45,18 @@ function cme_referer() {
 
   if(isset($_SERVER['HTTP_REFERER'])) {
 
-    $cme_referer_url = $_SERVER['HTTP_REFERER'];
+    $cme_referer_url = esc_url( $_SERVER['HTTP_REFERER'] );
 
   } else {
 
-    $cme_referer_url = 'direct visit';
+    $cme_referer_url = esc_url( 'Direct Visit' );
 
   }
 
 	$cme_referer = '<p style="display: none !important"><span class="wpcf7-form-control-wrap referer-page">';
   $cme_referer .= '<input type="text" name="referer-page" ';
   $cme_referer .= 'value="'.$cme_referer_url.'" ';
+  $cme_referer .= 'data-value="'.$cme_referer_url.'" ';
   $cme_referer .= 'size="40" class="wpcf7-form-control wpcf7-text referer-page" aria-invalid="false">';
   $cme_referer .= '</span></p>'. "\n";
 
@@ -67,16 +68,21 @@ function cme_referer() {
 function cme_getRefererPage( $form_tag ) {
 
   if ( $form_tag['name'] == 'referer-page' ) {
-          $form_tag['values'][] = $_SERVER['HTTP_REFERER'];
+
+    $form_tag['values'][] = esc_url( $_SERVER['HTTP_REFERER'] );
+
   }
+
   return $form_tag;
+
 }
 
 if ( !is_admin() ) {
         add_filter( 'wpcf7_form_tag', 'cme_getRefererPage' );
 }
 
-add_action( 'init', 'cme_init_constants' );
+
+
 function cme_init_constants(){
 
   define( 'CME_URL', '//renzojohnson.com/contributions/contact-form-7-campaign-monitor-extension' );
@@ -87,6 +93,9 @@ function cme_init_constants(){
   define( 'CME_DON', 'https://www.paypal.me/renzojohnson' );
 
 }
+add_action( 'init', 'cme_init_constants' );
+
+
 
 function cm_get_latest_item(){
     $args = array(

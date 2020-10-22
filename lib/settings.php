@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2017 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 require_once( SPARTAN_CME_PLUGIN_DIR . '/lib/activate.php' );
 require_once( SPARTAN_CME_PLUGIN_DIR . '/lib/cme-debug-logger.php' );
+require_once( SPARTAN_CME_PLUGIN_DIR . '/lib/cme_db_log.php' );
 require_once( SPARTAN_CME_PLUGIN_DIR . '/lib/functions.php' );
 require_once( SPARTAN_CME_PLUGIN_DIR . '/lib/enqueue.php' );
 require_once( SPARTAN_CME_PLUGIN_DIR . '/lib/tools.php' );

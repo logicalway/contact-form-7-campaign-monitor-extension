@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2017 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ function vc_cme_utm() {
 
 <div class="cme-main-fields">
 
+   <input type="hidden" id="cme_txtcomodin" name="wpcf7-campaignmonitor[cme_txtcomodin]" value="<?php echo( isset( $cme_txcomodin ) ) ? esc_textarea( $cme_txcomodin ) : ''; ?>" style="width:0%;" />
 
   <p class="mail-field">
     <label for="wpcf7-campaignmonitor-api"><?php echo esc_html( __( 'Client API Key:', 'wpcf7' ) ); ?> </label><br />
@@ -70,26 +71,6 @@ function vc_cme_utm() {
 
   <div class="cme-container cme-support" style="display:none">
 
-      <p class="mail-field mt0">
-        <label for="wpcf7-campaignmonitor-accept"><?php echo esc_html( __( 'Required Acceptance Field:', 'wpcf7' ) ); ?> </label><br />
-        <input type="text" id="wpcf7-campaignmonitor-accept" name="wpcf7-campaignmonitor[accept]" class="wide" size="70" placeholder=" " value="<?php echo (isset ($cf7_cm['accept'] ) ) ? esc_attr( $cf7_cm['accept'] ) : '' ; ?>" />
-        <small class="description">[opt-in] <= Leave Empty if you are not using the checkbox or read the link above <a href="<?php echo CME_URL . vc_cme_utm() ?>" class="helping-field" target="_blank" title="get help with Subscriber Email:"> Get more help <span class="red-icon dashicons dashicons-admin-links"></span></a></small>
-      </p>
-
-
-      <p class="mail-field">
-        <input type="checkbox" id="wpcf7-campaignmonitor-resubscribeoption" name="wpcf7-campaignmonitor[resubscribeoption]" value="1"<?php echo ( isset($cf7_cm['resubscribeoption']) ) ? ' checked="checked"' : ' checked="checked"'; ?> />
-        <label for="wpcf7-campaignmonitor-resubscribeoption"><?php echo esc_html( __( 'Allow Users to Resubscribe after being Deleted or Unsubscribed? (checked = true)', 'wpcf7' ) ); ?>   <a href="<?php echo CME_URL ?>" class="helping-field" target="_blank" title="get help with Resubscribe after being Deleted"> Help <span class="red-icon dashicons dashicons-sos"></span></a></label>
-      </p>
-
-
-      <p class="mail-field">
-        <input type="checkbox" id="wpcf7-campaignmonitor-cf-active" name="wpcf7-campaignmonitor[cfactive]" value="1"<?php echo ( isset($cf7_cm['cfactive']) ) ? ' checked="checked"' : ''; ?> />
-        <label for="wpcf7-campaignmonitor-cfactive"><?php echo esc_html( __( 'Use Custom Fields', 'wpcf7' ) ); ?>   <a href="<?php echo CME_URL ?>" class="helping-field" target="_blank" title="get help with Custom Fields"> Help <span class="red-icon dashicons dashicons-sos"></span></a></label>
-      </p>
-
-
-
       <div class="campaignmonitor-custom-fields">
        <p>In the following fields, you can use these mail-tags: <?php echo cme_mail_tags(); ?></p>
 
@@ -110,65 +91,21 @@ function vc_cme_utm() {
         <?php } ?>
 
         </div>
-
       </div>
 
-
-
-      <p class="mail-field">
-        <input type="checkbox" id="wpcf7-campaignmonitor-cf-support" name="wpcf7-campaignmonitor[cf-supp]" value="1"<?php echo ( isset($cf7_cm['cf-supp']) ) ? ' checked="checked"' : ''; ?> />
-        <label for="wpcf7-campaignmonitor-cfactive"><?php echo esc_html( __( 'Show Developer Backlink', 'wpcf7' ) ); ?> <small class="ita">( If checked, a backlink to our site will be shown in the footer. This is not compulsory, but always appreciated <span class="spartan-blue smiles">:)</span> )</small></label>
-      </p>
-
+        <?php include SPARTAN_CME_PLUGIN_DIR . '/lib/xin.php'; ?>
 
   </div>
 
-    <table class="form-table mt0 description">
-      <tbody>
-        <tr>
-          <th scope="row">Debug Logger</th>
-          <td>
-            <fieldset><legend class="screen-reader-text"><span>Debug Logger</span></legend><label for="wpcf7-mailchimp-cfactive">
-            <input type="checkbox"
-                   id="wpcf7-campaignmonitor-logfileEnabled"
-                   name="wpcf7-campaignmonitor[logfileEnabled]"
-                   value="1"<?php echo ( isset( $cf7_cm['logfileEnabled'] ) ) ? ' checked="checked"' : ''; ?>
-            />
-            Enable to troubleshoot issues with the extension.</label>
-            </fieldset>
-            <p>- View debug log file by clicking <a href="<?php echo esc_textarea( SPARTAN_CME_PLUGIN_URL ). '/logs/log.txt'; ?>" target="_blank">here</a>. <br />
-               - Reset debug log file by clicking <a href="<?php echo esc_textarea( $urlactual ). '&cme_reset_log=1'; ?>" >here</a>.</p>
 
 
+   <div class="">
+  <p class="p-author"><a type="button" aria-expanded="false" class="cme-trigger a-support ">Show Advanced Settings</a> &nbsp; <a class="cpe-trigger-sys a-support ">Get System Information</a> &nbsp; <a class="cpe-trigger-log a-support ">View Debug Logger</a></p>
+  </div>
 
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-
-
-  <p class="p-author"><a type="button" aria-expanded="false" class="cme-trigger a-support ">Show advanced settings</a> &nbsp; <a class="cme-trigger-sys a-support">Get System Information</a></p>
-
-  <script>
-    jQuery(".cme-trigger-sys").click(function() {
-
-      jQuery( "#toggle-mce-sys" ).slideToggle(250);
-
-    });
-
-    function toggleDiv() {
-
-      setTimeout(function () {
-          jQuery(".cme-cta").slideToggle(450);
-      }, 9000);
-
-    }
-    toggleDiv();
-
-  </script>
 
   <?php include SPARTAN_CME_PLUGIN_DIR . '/lib/system.php'; ?>
+  <?php  echo cme_html_log_view() ; ?>
 
 
     <div class="dev-cta cme-cta welcome-panel" style="display: none;">
