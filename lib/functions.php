@@ -318,7 +318,7 @@ function cf7_cm_tag_replace( $pattern, $subject, $posted_data, $html = false ) {
 			return stripslashes( $replaced );
 		}
 
-		if ( $special = apply_filters( 'wpcf7_special_mail_tags', '', $matches[1] ) )
+		if ( $special = apply_filters( 'wpcf7_special_mail_tags', '', $matches[1],'','' ) )
 			return $special;
 
 		return $matches[0];
