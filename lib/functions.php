@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2021 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-//resetlogfile_cm();  //para resetear
 
 add_action( 'wp_ajax_campaing_logreset',  'campaing_logreset' );
 add_action( 'wp_ajax_no_priv_campaing_logreset',  'campaing_logreset' );
@@ -118,6 +117,31 @@ function wpcf7_cm_add_campaignmonitor($args) {
 	$url = $_SERVER['REQUEST_URI'];
 	$urlactual = $url;
 
+	//Incluir validacion del API
+
+  $cme_txcomodin = $args->id() ;
+  $listatags = wpcf7_cme_form_tags();
+  // probando si cambio
+
+  if ( ( ! isset( $cf7_cm['listatags'] ) ) or is_null( $cf7_cm['listatags'] ) ) {
+      unset( $cf7_cm['listatags'] );
+      $cf7_cm = $cf7_cm + array( 'listatags' => $listatags ) ;
+      update_option( 'cf7_cm_'.$args->id(), $cf7_cm );
+  }
+
+  $logfileEnabled = ( isset( $cf7_cm['logfileEnabled'] ) ) ? $cf7_cm['logfileEnabled']  : 0 ;
+
+  $cmeapi = ( isset( $cf7_cm['api'] )   ) ? $cf7_cm['api'] : null ;
+
+	$apivalid = ( isset( $cf7_cm['api-validation'] )   ) ? $cf7_cm['api-validation'] : null ;
+
+	$listdata = ( isset( $cf7_cm['lisdata'] )   ) ? $cf7_cm['lisdata'] : null ;
+
+
+	$cm_valid = '<span class="cmm valid"><span class="dashicons dashicons-yes"></span>API Key</span>';
+  	$cm_invalid = '<span class="cmm invalid"><span class="dashicons dashicons-no"></span>API Key</span>';
+
+
   include SPARTAN_CME_PLUGIN_DIR . '/lib/view.php';
 
 }
@@ -137,7 +161,24 @@ function resetlogfile_cm() {
 function wpcf7_cm_save_campaignmonitor($args) {
 
 	if(!empty($_POST)){
-		update_option( 'cf7_cm_'.$args->id(), $_POST['wpcf7-campaignmonitor'] );
+
+
+		$default = array () ;
+		$cf7_cm = get_option ( 'cf7_cm_'.$args->id(), $default  ) ;
+
+		$apivalid = ( isset( $cf7_cm['api-validation'] ) ) ? $cf7_cm['api-validation'] : 0   ;
+		$listdata = ( isset( $cf7_cm['lisdata'] ) ) ? $cf7_cm['lisdata'] : 0   ;
+
+		$globalarray = $_POST['wpcf7-campaignmonitor'] ;
+
+		if ( !isset( $_POST['wpcf7-campaignmonitor']['api-validation'] ) )
+				$globalarray += array ('api-validation' => $apivalid  ) ;
+
+		if ( !isset( $_POST['wpcf7-campaignmonitor']['lisdata'] )  ) {
+				$globalarray += array ('lisdata' => $listdata  ) ;
+		}
+
+		update_option( 'cf7_cm_'.$args->id(), $globalarray );
 	}
 }
 add_action( 'wpcf7_after_save', 'wpcf7_cm_save_campaignmonitor' );
@@ -148,7 +189,7 @@ function show_cm_metabox ( $panels ) {
 
 	$new_page = array(
 		'cme-Extension' => array(
-			'title' => __( 'Cmpgn Monitor', 'contact-form-7' ),
+			'title' => __( 'Cmpgn Monitor Lite', 'contact-form-7' ),
 			'callback' => 'wpcf7_cm_add_campaignmonitor'
 		)
 	);
@@ -166,7 +207,7 @@ function spartan_cme_author_wpcf7( $cme_supps, $class, $content, $args  ) {
 
 	$cf7_cm_defaults = array();
 	$cf7_cm = get_option( 'cf7_cm_'.$args->id(), $cf7_cm_defaults );
-	// $cfsupp = $cf7_cm['cf-supp'];
+
   $cfsupp = ( isset( $cf7_cm['cf-supp'] ) ) ? $cf7_cm['cf-supp'] : 0;
 
 
@@ -280,7 +321,6 @@ function wpcf7_cm_subscribe($obj) {
 
 			} catch ( Exception $e ) {
 
-      		//echo 'Error, check your error log file for details';
 		 		$cme_db_log = new cme_db_log( 'cme_db_issues' , $logfileEnabled,'api',$idform );
 				$cme_db_log->cme_log_insert_db(4, 'Contact Form 7 response: Try Catch  ' . $e->getMessage()  , $e  );
 

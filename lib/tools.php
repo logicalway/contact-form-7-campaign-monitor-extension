@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2021 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -41,7 +41,6 @@ function cme_author() {
 
 function cme_referer() {
 
-  // $cme_referer_url = $THE_REFER=strval(isset($_SERVER['HTTP_REFERER']));
 
   if(isset($_SERVER['HTTP_REFERER'])) {
 
@@ -115,7 +114,7 @@ function cm_get_latest_item(){
 
 
 function wpcf7_form_cme_tags() {
-  // $manager = WPCF7_FormTagsManager::get_instance();
+
   $manager = class_exists('WPCF7_FormTagsManager') ? WPCF7_FormTagsManager::get_instance() : WPCF7_ShortcodeManager::get_instance(); // ff cf7 4.6 and earlier
   $form_tags = $manager->get_scanned_tags();
   return $form_tags;

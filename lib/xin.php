@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2021 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ $cme_tool_autoupdate = get_option( 'campaignmonitor-update') ;
 
 if ( $cme_tool_autoupdate === '0' or  $cme_tool_autoupdate ==='1' ) {
     update_option( 'campaignmonitor-update', $cme_tool_autoupdate );
-    //var_dump ( 'existe : ' . $mch_tool_autoupdate  ) ;
+
     } else {
 
       $deprecated = null;
@@ -49,7 +49,7 @@ if ( $cme_tool_autoupdate === '0' or  $cme_tool_autoupdate ==='1' ) {
         <td>
           <fieldset><legend class="screen-reader-text"><span>Required Acceptance Field:</span></legend><label for="wpcf7-campaignmonitor-accept">
           <input type="text" id="wpcf7-campaignmonitor-accept" name="wpcf7-campaignmonitor[accept]" class="wide" size="70" placeholder=" " value="<?php echo (isset ($cf7_cm['accept'] ) ) ? esc_attr( $cf7_cm['accept'] ) : '' ; ?>" />
-           <small class="description">[opt-in] <= Leave Empty if you are not using the checkbox or read the link above <a href="<?php echo CME_URL . vc_cme_utm() ?>" class="helping-field" target="_blank" title="get help with Subscriber Email:"> Get more help <span class="red-icon dashicons dashicons-admin-links"></span></a></small></label>
+           <small class="description"><?php echo cme_mail_tags(); ?><a href="<?php echo CME_URL . vc_cme_utm() ?>" class="helping-field" target="_blank" title="get help with Subscriber Email:"> Get more help <span class="red-icon dashicons dashicons-admin-links"></span></a></small></label>
           </fieldset>
         </td>
       </tr>

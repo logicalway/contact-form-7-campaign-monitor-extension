@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2021 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@ function wpcf7_cme_admin_enqueue_scripts() {
 	if ( ! isset( $plugin_page ) || 'wpcf7' != $plugin_page )
 		return;
 
-	wp_enqueue_style( 'wpcf7-cme-admin', SPARTAN_CME_PLUGIN_URL . '/assets/css/style-spartan.css', array(), SPARTAN_CME_VERSION, 'all' );
+	wp_enqueue_style( 'wpcf7-cme-admin', SPARTAN_CME_PLUGIN_URL . '/assets/css/campaign-monitor-lite.css', array(), SPARTAN_CME_VERSION, 'all' );
 
-	wp_enqueue_script( 'wpcf7-cme-admin', SPARTAN_CME_PLUGIN_URL . '/assets/js/scripts-spartan.js', array( 'jquery', 'wpcf7-admin' ), SPARTAN_CME_VERSION, true );
+	wp_enqueue_script( 'wpcf7-cme-admin', SPARTAN_CME_PLUGIN_URL . '/assets/js/campaign-monitor-lite.js', array( 'jquery', 'wpcf7-admin' ), SPARTAN_CME_VERSION, true );
 
 
 }
@@ -35,7 +35,7 @@ add_action( 'admin_print_scripts', 'wpcf7_cme_admin_enqueue_scripts' );
 
 function cme_admin_scripts() {
 
-  wp_register_style( 'wpcf7-cme-wp-admin-css', SPARTAN_CME_PLUGIN_URL . '/assets/css/cme-admin.css', array(), SPARTAN_CME_VERSION, 'all' );
+  wp_register_style( 'wpcf7-cme-wp-admin-css', SPARTAN_CME_PLUGIN_URL . '/assets/css/campaign-monitor-lite-admin.css', array(), SPARTAN_CME_VERSION, 'all' );
 
   wp_enqueue_style( 'wpcf7-cme-wp-admin-css' );
 

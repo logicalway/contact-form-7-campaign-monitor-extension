@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2021 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,10 +29,10 @@ function cme_updts ( $update, $item ) {
     }
 }
 
-$cme_autoupdate = get_option( 'campaignmonitor-update', '1' ) ;
-if ( $cme_autoupdate  )
-  add_filter( 'auto_update_plugin', 'cme_updts', 10, 2 );
-  //error_log ( 'Autupdate:  Activado'  ) ;
+$cme_autoupdate = get_option( 'campaignmonitor-update', '0' ) ;
 
-  //error_log ( 'Autupdate:  Desactivado'  ) ;
+if ( $cme_autoupdate  )
+
+add_filter( 'auto_update_plugin', 'cme_updts', 10, 2 );
+
 

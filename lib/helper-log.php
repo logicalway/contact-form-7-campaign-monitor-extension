@@ -2,51 +2,49 @@
 /**
 *
 * @version       0.1
-* @author        Campaing Monitor LLC https://Campaing Monitor - fer coss
-* @copyright     Copyright (c) 2013-2019 Chimpmatic LLC (help@cmematic.com)
-* @package       Campaing Monitor
-* @license       Copyright (c) Renzo Johnson - fer coss
-* 
+* @author        Campaing Monitor LLC https://renzo.io
+* @copyright     Copyright (c) 2013-2021 Chimpmatic LLC (help@renzo.io)
+* @package       Logger
+* @license       Copyright (c) Renzo Johnson
+*
 */
 
 class cme_db_log {
-	
+
 		// Atributos
     public $form;
     public $debug_enabled;
 		public $category ;
 		public $idform ;
-  	
+
 		public function __construct( $form, $debug_enabled, $category, $idform = ''   ) {
 
-			$this->form = $form; 
+			$this->form = $form;
 			$this->debug_enabled = $debug_enabled ;
-			$this->category = $category ; 
-			$this->idform = $idform ; 
+			$this->category = $category ;
+			$this->idform = $idform ;
 
 		}
-	
+
 		public function cme_log_insert_db ( $mstype, $content, $object ) {
 
-			if ( !$this->debug_enabled ) return ; 
+
+			if ( !$this->debug_enabled ) return ;
 
 			$form = $this->form  ;
 
 			$default = array() ;
 			$master_error = get_option ( $form.'_log', $default ) ;
 			$master_error = is_null ( $master_error ) ? array() :  $master_error ;
-			
-			//error_log ( print_r ( $master_error,true ) ) ;
-			
+
 			$maxarray = count ( $master_error  ) + 1 ;
-			//error_log ( print_r ( 'cuenta :' . $maxarray  ) ) ;
 
 			$serror_log  = array(
 					'id'  => uniqid(),
 					'idform' => $this->idform,
 					'category' => $this->category,
 					'mstype' => $mstype,
-					'date' => getdate(),       
+					'date' => getdate(),
 					'datetxt' => date('m/d/y H:i:s'),
 					'dateonly' => date('m/d/y'),
 					'timestamp' => current_time ('timestamp'),
@@ -56,33 +54,33 @@ class cme_db_log {
 
 			if ( $maxarray == 1 )
 				$master_error = array( $maxarray => $serror_log ) ;
-			else 
+			else
 				$master_error = $master_error + array( $maxarray => $serror_log ) ;
-			
+
 			if ( !get_option ( $form.'_log' ) ) {
-				//	error_log ( 'Entra al log Add'  ) ; 
+
 					$deprecated = null;
       		$autoload = 'no';
       		add_option( $form.'_log', $master_error, $deprecated, $autoload );
-				
+
 			} else {
-				//	error_log ( 'Entra al log Up'  ) ; 				
+
 				  update_option ( $form.'_log' , $master_error  ) ;
 			}
-						
-			//error_log ( print_r ( $master_error,true )  ) ;
-			
-			$master_save = get_option ( $form.'_log' ) ; 									
-			
+
+
+
+			$master_save = get_option ( $form.'_log' ) ;
+
 		}
-	
+
 		public function cme_log_delete_db () {
 			$form = $this->form.'_log'   ;
-			 
-			//error_log ( $form  ) ;
+
+
 			$result = delete_option ( $form ) ;
 			return $result ;
-		} 
-	
-	
+		}
+
+
 }
