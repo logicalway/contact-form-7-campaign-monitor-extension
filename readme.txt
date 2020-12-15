@@ -3,7 +3,7 @@ Contributors: rnzo
 Donate link: https://bit.ly/2HdTzmO
 Tags: contact form 7, newsletter, campaign monitor, createsend, cme, contact, form, contact form, email, mailing list, renzo johnson
 Requires at least: 4.0
-Tested up to: 5.5.9
+Tested up to: 5.6.9
 Stable tag: 4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -71,7 +71,7 @@ Do you have questions or issues with Contact Form 7 Campaign Monitor Extension? 
 
 For more information, see [Releases](https://renzojohnson.com/contributions/contact-form-7-campaign-monitor-extension).
 
-= 0.4.53 =
+= 0.4.54 =
 
 * Interface improvements
 
