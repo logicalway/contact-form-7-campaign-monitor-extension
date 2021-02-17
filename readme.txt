@@ -71,7 +71,7 @@ Do you have questions or issues with Contact Form 7 Campaign Monitor Extension? 
 
 For more information, see [Releases](https://renzojohnson.com/contributions/contact-form-7-campaign-monitor-extension).
 
-= 0.4.54 =
+= 0.4.55 =
 
 * Interface improvements
 
