@@ -1,10 +1,10 @@
 === Contact Form 7 Campaign Monitor Extension ===
 Contributors: rnzo
 Donate link: https://bit.ly/2HdTzmO
-Tags: contact form 7, newsletter, campaign monitor, createsend, cme, contact, form, contact form, email, mailing list, renzo johnson
+Tags: newsletter, email, marketing, contact form 7, campaign monitor, createsend, cme, contact, form, contact form, email, mailing list, renzo johnson
 Requires at least: 4.0
-Tested up to: 5.6.9
-Stable tag: 4.0
+Tested up to: 5.7.9
+Stable tag: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,9 @@ Simple way to integrate Campaign Monitor mailing lists to Contact Form 7. Save y
 == Description ==
 
 Integrate Contact Form 7 with Campaign Monitor. Automatically add form submissions to predetermined lists in Campaign Monitor, using its latest API. This Campaign Monitor Extension supports multiple mailing lists and API Keys.
+Marketing professionals love Contact Form 7 Extension For Campaign Monitor for many reasons. It’s easy to set up and very flexible. If you don’t have an email marketing solution in place, this plugin is a good place to start harnessing the power of this marketing strategy.
+
+The best form of engagement is direct email contact with your readers. This begins with your visitors making contact through your website contact form and this is where the Wordpress Contact Form 7 For Campaign Monitor plugin will help you.
 
 > <strong>Campaign Monitor Support</strong><br>
 > Active support is not always provided for the <a href="https://renzojohnson.com/contributions/contact-form-7-campaign-monitor-extension" rel="friend">Contact Form 7 Campaign Monitor Extension</a> on the WordPress.org forums. One-on-one email support is available to people who email the Campaign Monitor <a href="https://renzojohnson.com/contributions/contact-form-7-campaign-monitor-extension" rel="friend">Extension developer</a>.
@@ -71,7 +74,7 @@ Do you have questions or issues with Contact Form 7 Campaign Monitor Extension? 
 
 For more information, see [Releases](https://renzojohnson.com/contributions/contact-form-7-campaign-monitor-extension).
 
-= 0.4.55 =
+= 0.4.56 =
 
 * Interface improvements
 
