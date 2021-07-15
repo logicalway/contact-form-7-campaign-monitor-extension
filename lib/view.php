@@ -32,6 +32,49 @@ function vc_cme_utm() {
 
 }
 
+
+
+function cme_html_selected_tag_optin ($listatags,$cf7_cm) {
+
+  $filtro = 'checkbox';
+  /*echo ('<pre>') ;
+    var_dump ( $listatags ) ;
+  echo ('</pre>');*/
+
+  $r = array_filter( $listatags, function( $e ) use ($filtro) {
+          return ( $e['basetype'] == $filtro or $e['basetype'] == 'acceptance' )  ;
+        });
+
+  $listatags = $r ;
+  $accept = ( isset( $cf7_cm[ 'accept' ] )   ) ? $cf7_cm[ 'accept' ] : ' ' ;
+
+  ?>
+
+    <select class="cme-select" id="wpcf7-campaignmonitor-accept"
+      name="wpcf7-campaignmonitor[accept]" style="width:35%" >
+        <span> Required Acceptance Field   <a href="<?php echo CME_URL ?>/campaignmonitor-opt-in-checkbox" class="helping-field" target="_blank" title="get help with Required Acceptance Field - Opt-in"> Help <span class="red-icon dashicons dashicons-sos"></span>
+        <option value=" "
+            <?php if ( $accept == ' ' ) { echo 'selected="selected"'; } ?>>
+            <?php echo 'Choose.. ' ?></option>
+       <?php
+          foreach ( $listatags as $listdos ) {
+            if ( 'opt-in' != trim( $listdos['name'] )  && '' != trim( $listdos['name'] ) ) {
+            ?>
+              <option value="<?php echo $listdos['name'] ?>"
+                <?php if ( $accept == $listdos['name'] ) { echo 'selected="selected"'; } ?>>
+                <?php echo '&#91;'.$listdos['name'].'&#93; ' ?> <span class="awb-type"><?php echo ' - type :'.$listdos['basetype'] ; ?></span> </option>
+              <?php
+            }
+         }
+      ?>
+
+    </select>
+
+<?php
+}
+
+
+
 function cme_panel_gen ($apivalid,$listdata,$cf7_cm,$listatags,$cme_txcomodin) {
   ?>
    <div class="mystery">

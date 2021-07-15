@@ -44,12 +44,12 @@ if ( $cme_tool_autoupdate === '0' or  $cme_tool_autoupdate ==='1' ) {
         </td>
       </tr>
 
-			<tr>
+      <tr>
         <th scope="row">Required Acceptance</th>
         <td>
-          <fieldset><legend class="screen-reader-text"><span>Required Acceptance Field:</span></legend><label for="wpcf7-campaignmonitor-accept">
-          <input type="text" id="wpcf7-campaignmonitor-accept" name="wpcf7-campaignmonitor[accept]" class="wide" size="70" placeholder=" " value="<?php echo (isset ($cf7_cm['accept'] ) ) ? esc_attr( $cf7_cm['accept'] ) : '' ; ?>" />
-           <small class="description"><?php echo cme_mail_tags(); ?><a href="<?php echo CME_URL . vc_cme_utm() ?>" class="helping-field" target="_blank" title="get help with Subscriber Email:"> Get more help <span class="red-icon dashicons dashicons-admin-links"></span></a></small></label>
+          <fieldset>
+            <?php cme_html_selected_tag_optin ( $listatags,$cf7_cm ) ?>
+            <p class="description">Required Acceptance Field.</p>
           </fieldset>
         </td>
       </tr>
