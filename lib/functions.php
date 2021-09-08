@@ -15,7 +15,7 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
+/*Probando*/
 
 add_action( 'wp_ajax_campaing_logreset',  'campaing_logreset' );
 add_action( 'wp_ajax_no_priv_campaing_logreset',  'campaing_logreset' );
@@ -230,15 +230,19 @@ add_filter('wpcf7_form_response_output', 'spartan_cme_author_wpcf7', 40, 4);
 
 function wpcf7_cm_subscribe($obj) {
 
+	//var_dump ('Paso 0');
+
 	$cf7_cm = get_option( 'cf7_cm_'.$obj->id() );
 	$idform = 'cf7_cm_'.$obj->id() ;
 
 	$submission = WPCF7_Submission::get_instance();
 
-  $logfileEnabled = isset($cf7_cm['logfileEnabled']) && !is_null($cf7_cm['logfileEnabled']) ? $cf7_cm['logfileEnabled'] : false;
+  	$logfileEnabled = isset($cf7_cm['logfileEnabled']) && !is_null($cf7_cm['logfileEnabled']) ? $cf7_cm['logfileEnabled'] : false;
 
-	if( $cf7_cm ) {
-		$subscribe = false;
+	//var_dump ('Paso 1');
+
+	  if( $cf7_cm ) {
+		$subscribe = true; //++
 
 		$regex = '/\[\s*([a-zA-Z_][0-9a-zA-Z:._-]*)\s*\]/';
 		$callback = array( &$obj, 'cf7_cm_callback' );
@@ -266,6 +270,9 @@ function wpcf7_cm_subscribe($obj) {
 
 		}
 
+		//var_dump ('$subscribe 1') ;
+		//var_dump ($subscribe);
+
 		$CustomFields[] ="";
 
 		for($i=1;$i<=20;$i++) {
@@ -286,6 +293,10 @@ function wpcf7_cm_subscribe($obj) {
 
 			$ResubscribeOption = false;
 		}
+
+		//var_dump ('Paso 2');
+		//var_dump ('$subscribe 2') ;
+		//var_dump ($subscribe);
 
 		if($subscribe && $email != $cf7_cm['email']){
 
@@ -313,6 +324,7 @@ function wpcf7_cm_subscribe($obj) {
     												 );
 
 					$resultsend = wp_remote_post($url, $vc_headers );
+					//var_dump ('Paso 3');
 
 					$resultfinal = $resultsend;
 
