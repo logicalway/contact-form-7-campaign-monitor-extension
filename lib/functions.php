@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2021 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2010-2022 Renzo Johnson (email: renzo.johnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,7 +15,6 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-/*Probando*/
 
 add_action( 'wp_ajax_campaing_logreset',  'campaing_logreset' );
 add_action( 'wp_ajax_no_priv_campaing_logreset',  'campaing_logreset' );
