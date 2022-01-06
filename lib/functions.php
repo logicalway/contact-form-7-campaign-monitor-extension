@@ -241,7 +241,7 @@ function wpcf7_cm_subscribe($obj) {
 	//var_dump ('Paso 1');
 
 	  if( $cf7_cm ) {
-		$subscribe = true; //++
+		$subscribe = false; //++
 
 		$regex = '/\[\s*([a-zA-Z_][0-9a-zA-Z:._-]*)\s*\]/';
 		$callback = array( &$obj, 'cf7_cm_callback' );
@@ -255,13 +255,11 @@ function wpcf7_cm_subscribe($obj) {
 
 		if( isset($cf7_cm['accept']) && strlen($cf7_cm['accept']) != 0 ) {
 
-			$accept = cf7_cm_tag_replace( $regex, $cf7_cm['accept'], $submission->get_posted_data() );
+			$accept = cf7_cm_tag_replace( $regex, '['. $cf7_cm['accept'] . ']', $submission->get_posted_data() );
 
-			if($accept != $cf7_cm['accept']) {
-
-				if(strlen($accept) > 0)
+			if(strlen($accept) > 0)
 					$subscribe = true;
-			}
+			
 
 		} else {
 
