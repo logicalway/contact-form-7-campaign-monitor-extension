@@ -3,7 +3,7 @@
  * Plugin Name: Contact Form 7 Campaign Monitor Extension
  * Plugin URI: http://renzojohnson.com/contributions/contact-form-7-campaign-monitor-extension
  * Description: Integrate Contact Form 7 with Campaign Monitor. Automatically add form submissions to predetermined lists in Campaign Monitor, using its latest API.
- * Version: 0.4.64
+ * Version: 0.4.65
  * Author: Renzo Johnson
  * Author URI: https://renzojohnson.com
  * Text Domain: campaign-monitor-lite
@@ -30,7 +30,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-define( 'SPARTAN_CME_VERSION', '0.4.64' );
+define( 'SPARTAN_CME_VERSION', '0.4.65' );
 define( 'SPARTAN_CME_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'SPARTAN_CME_PLUGIN_NAME', trim( dirname( SPARTAN_CME_PLUGIN_BASENAME ), '/' ) );
 define( 'SPARTAN_CME_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
